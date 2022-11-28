@@ -1,0 +1,50 @@
+.list-bg{
+    background-color: #EAEAEA;
+    padding: 10px;
+    border-radius: 10px;
+    width: 200px;
+    
+}
+.project-title{
+    font-family: 'sans-serif';
+    font-size: 14px;
+}
+.card-bg{
+    background-color: #ffff;
+    
+}
+.ant-card{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    
+    .ant-card-body{
+        padding: 5px;
+    }
+}
+
+.add-card-btn{
+    margin-top: 15px;
+}
+.add-card-input{
+    background-color: white;
+    padding: 20px;
+    outline: 0;
+    border: 0;
+    margin-top: 10px;
+
+}
+.add-inner-card{
+    background-color: rgb(31, 31, 241);
+    color: white;
+    font-family: 'sans-serif';
+    font-weight: bold;
+    font-size: 12px;
+}
+.add-card-container{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10px;
+}
+.inserted-card{
+    margin-top: 15px;
+}
