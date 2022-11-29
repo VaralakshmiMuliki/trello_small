@@ -7,29 +7,29 @@ import { v4 as uuidv4 } from "uuid";
 //   { id:3, title: "Pending", task: ["stakeholders"] },
 // ];
 
-export const dummyListData = [
-  {
-    listId : uuidv4(),
+export const dummyListData = {
+  [uuidv4()]:{
+    
     name: "Project Resource",
     task: [
       { id: uuidv4(), content: "Weekly Updates" },
       { id: uuidv4(), content: "Tasks Done" },
     ],
   },
-  { 
-    listId : uuidv4(),
+  [uuidv4()]:{ 
+    
     name: "Done",
     task: [
       { id: uuidv4(), content: "Monthly Updates" },
       { id: uuidv4(), content: "Tasks Done" },
     ],
   },
-  {
-    listId : uuidv4(),
-    name: "pending",
+  [uuidv4()]:{
+     
+    name: "Pending",
     task: [
       { id: uuidv4(), content: "StakeHolders" },
       { id: uuidv4(), content: "Tasks Done" },
     ],
   },
-];
+};

@@ -1,25 +1,40 @@
 import React, { useState } from "react";
 import "./listContainer.scss";
-import { Button, List } from "antd";
+import { Button } from "antd";
 import { dummyListData } from "../../fixtures/dummyListData";
 import { CardsContainer } from "../CardsContainer/cardsContainer";
 import { X } from "react-feather";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { v4 as uuidv4 } from "uuid";
 // import Column from "antd/es/table/Column";
 
 export const ListContainer = () => {
   const [columns, setcolumns] = useState(dummyListData);
 
   const [addBoard, setAddBoard] = useState(false);
-  const [boardTitle, setBoardTitle] = useState("");
-  function addList(event) {
-    event.preventdefault();
-    dummyListData.title.push(boardTitle);
-    console.log(dummyListData);
+  const [boardTitle, setBoardTitle] = useState();
+  function addList() {
+    // let newList = {
+    //   [uuidv4()]:{
+    //     name: boardTitle,
+    //     task:[]
+    //   }
+    // }
+    console.log("function called");
+
+    // Object.entries(add).newList(([key,value]) => { dummyListData[key] = value })
+    // dummyListData.push(newList);
+
+    if(boardTitle !== undefined) {
+      dummyListData[uuidv4()] = { name: boardTitle, task: [] };
+    }
+
+    setAddBoard(false);
+    console.log("new", dummyListData);
   }
   const onDragEnd = (result, columns, setColumns) => {
-    console.log(columns)
-    
+    console.log("columns", columns);
+    console.log("result", result);
 
     if (!result.destination) return;
     const { source, destination } = result;
@@ -28,6 +43,7 @@ export const ListContainer = () => {
       const sourceColumn = columns[source.droppableId];
 
       const destColumn = columns[destination.droppableId];
+
       const sourceItems = [...sourceColumn.task];
       const destItems = [...destColumn.task];
       const [removed] = sourceItems.splice(source.index, 1);
@@ -63,61 +79,56 @@ export const ListContainer = () => {
       <DragDropContext
         onDragEnd={(result) => onDragEnd(result, columns, setcolumns)}
       >
-        <div>
-          <List
-            itemLayout="horizontal"
-            dataSource={dummyListData}
-            renderItem={(listItem, index) => (
-              <Droppable droppableId={listItem.listId} key={listItem.listId}>
-                {(provided, snapshot) => {
-                  return (
-                    <div
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                      style={{
-                        background: snapshot.isDraggingOver
-                          ? "lightblue"
-                          : "lightgrey",
-                        padding: 4,
-                        width: 250,
-                        minHeight: 500,
-                      }}
-                    >
-                      <List.Item className="list-item">
-                        <CardsContainer
-                          listItem={listItem}
-                          key={listItem.listId}
-                        />
-                      </List.Item>
-                      {provided.placeholder}
-                    </div>
-                  );
-                }}
-              </Droppable>
-            )}
-          />
-          {addBoard ? (
-            <form onSubmit={addList}>
-              <input
-                type="text"
-                placeholder="Enter a Title for this Board"
-                className="add-card-input"
-                onChange={(event) => setBoardTitle(event.target.value)}
-                autoFocus
-              />
-              <div className="add-card-container">
-                <Button htmlType="submit" className="add-inner-card">
-                  Add Card
-                </Button>
-                <X onClick={() => setAddBoard(false)} />
-              </div>
-            </form>
-          ) : (
-            <Button className="add-card-btn" onClick={() => setAddBoard(true)}>
-              <span>+</span>Add Board
-            </Button>
-          )}
+        <div className="list-items">
+          {Object.entries(columns).map(([columnId, column], index) => (
+            <Droppable droppableId={columnId} key={columnId}>
+              {(provided, snapshot) => {
+                return (
+                  <div
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    style={{
+                      background: snapshot.isDraggingOver ? "" : "",
+                      padding: 4,
+                      width: 250,
+                      minHeight: 500,
+                    }}
+                  >
+                    <ul className="list-item">
+                      <CardsContainer listItem={column} key={columnId} />
+                    </ul>
+                    {provided.placeholder}
+                  </div>
+                );
+              }}
+            </Droppable>
+          ))}
+          
+        {addBoard ? (
+          <form >
+            <div className="add-list-container">
+            <input
+              type="text"
+              placeholder="Enter a Title for this Board"
+              className="add-card-input"
+              onChange={(event) => setBoardTitle(event.target.value)}
+              autoFocus
+            />
+            <div className="add-card-container">
+              <Button className="add-inner-card" onClick={() => addList()}>
+                Add List
+              </Button>
+              <X onClick={() => setAddBoard(false)} className='cancel-icon'/>
+            </div>
+            </div>
+          </form>
+        ) : (
+          <Button className="add-list-button" onClick={() => setAddBoard(true)}>
+            <span>+</span>Add List Container
+          </Button>
+        )}
         </div>
+
       </DragDropContext>
     </div>
   );

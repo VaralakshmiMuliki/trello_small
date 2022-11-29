@@ -1,6 +1,8 @@
 .list-container-bg{
-    background-image: linear-gradient(to right, #3B185F,#863A6F);
+    
     min-height: 100vh;
+    min-width: 400vw;
+    background-image: linear-gradient(to right, #3B185F,#863A6F);
     color: white;
     padding: 10px;
 }
@@ -12,6 +14,26 @@
     
 }
 
-.ant-list-items{
+.list-items{
+    
     display: flex;
 }
+.cancel-icon{
+    color: black;
+}
+.add-list-button{
+    margin-top: 25px;
+    margin-left: 30px;
+    background-color: #ffffff33;
+    color: #ffffff;
+    border:none;
+    border-radius:0;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+.add-list-container{
+    background-color: white;
+}
+
+

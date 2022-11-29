@@ -3,11 +3,13 @@
     padding: 10px;
     border-radius: 10px;
     width: 200px;
+    list-style-type: none;
     
 }
 .project-title{
     font-family: 'sans-serif';
     font-size: 14px;
+    color: rgb(12, 12, 51);
 }
 .card-bg{
     background-color: #ffff;
@@ -23,6 +25,7 @@
 
 .add-card-btn{
     margin-top: 15px;
+    
 }
 .add-card-input{
     background-color: white;
@@ -33,10 +36,10 @@
 
 }
 .add-inner-card{
-    background-color: rgb(31, 31, 241);
+    background-color:rgb(43, 43, 238);
     color: white;
     font-family: 'sans-serif';
-    font-weight: bold;
+    font-weight: 500;
     font-size: 12px;
 }
 .add-card-container{
@@ -47,4 +50,8 @@
 }
 .inserted-card{
     margin-top: 15px;
+   
+}
+.cancelIcon{
+    color: black;
 }

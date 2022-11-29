@@ -2,59 +2,57 @@ import React, { useState } from "react";
 import { Button, Card } from "antd";
 import { X } from "react-feather";
 import "./cards.scss";
-import {Draggable } from "react-beautiful-dnd";
+import { Draggable } from "react-beautiful-dnd";
+import { v4 as uuidv4 } from "uuid";
 // import { dummyListData } from "../../fixtures/dummyListData";
 
 export const CardsContainer = ({ listItem }) => {
   const [addOption, showAddOption] = useState(false);
-  const [inpuValue, setInputValue] = useState();
+  const [inputValue, setInputValue] = useState();
 
   function submission(e) {
     e.preventDefault();
-    listItem.task.push(inpuValue);
+    let newCard = { id: uuidv4(), content: `${inputValue}` };
+    //  newCard =! undefined ? listItem.task.push(newCard)
+    if(inputValue !== undefined){
+      listItem.task.push(newCard)
+    }
     showAddOption(false);
   }
+
 
   // drag and drop
 
   return (
     <div>
-      <div className="list-bg">
+      <li className="list-bg">
         <h1 className="project-title">{listItem.name}</h1>
 
         {listItem.task.map((item, i) => (
           <Draggable key={item.id} draggableId={item.id} index={i}>
             {(provided, snapshot) => {
-                                return (
-                                  <Card
-                                  className="inserted-card"
-                                    ref={provided.innerRef}
-                                    {...provided.draggableProps}
-                                    {...provided.dragHandleProps}
-                                    style={{
-                                      userSelect: "none",
-                                      padding: 16,
-                                      margin: "0 0 8px 0",
-                                      minHeight: "50px",
-                                      backgroundColor: snapshot.isDragging
-                                        ? "#263B4A"
-                                        : "#456C86",
-                                      color: "white",
-                                      ...provided.draggableProps.style,
-                                    }}
-                                  >
-                                    <p draggable={true}>{item.content}</p>
-                                  </Card>
-                                );
-                              }}
-
-
-
-
-
-            {/* <Card className="inserted-card">
-              <p draggable={true}>{item.content}</p>
-            </Card> */}
+              return (
+                <Card
+                  className="inserted-card"
+                  ref={provided.innerRef}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                  style={{
+                    userSelect: "none",
+                    padding: 16,
+                    margin: "0 0 8px 0",
+                    minHeight: "50px",
+                    backgroundColor: snapshot.isDragging
+                      ? "#ffffff"
+                      : "#ffffff",
+                    color: "#2B3A55",
+                    ...provided.draggableProps.style,
+                  }}
+                >
+                  <p draggable={true}>{item.content}</p>
+                </Card>
+              );
+            }}
           </Draggable>
         ))}
         {addOption ? (
@@ -70,7 +68,7 @@ export const CardsContainer = ({ listItem }) => {
               <Button htmlType="submit" className="add-inner-card">
                 Add Card
               </Button>
-              <X onClick={() => showAddOption(false)} />
+              <X onClick={() => showAddOption(false)} className='cancelIcon'/>
             </div>
           </form>
         ) : (
@@ -78,8 +76,7 @@ export const CardsContainer = ({ listItem }) => {
             <span>+</span>Add Card
           </Button>
         )}
-      </div>
-      
+      </li>
     </div>
   );
 };
