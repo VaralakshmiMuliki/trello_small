@@ -4,9 +4,11 @@ import { X } from "react-feather";
 import "./cards.scss";
 import { Draggable } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
-// import { dummyListData } from "../../fixtures/dummyListData";
+import { AddCard } from "../AddCard/addCard";
+// import { useRef, useEffect } from "react";
+// import OutsideClickHandler from "react-outside-click-handler";
 
-export const CardsContainer = ({ listItem }) => {
+export const CardsContainer = ({ listItem, label }) => {
   const [addOption, showAddOption] = useState(false);
   const [inputValue, setInputValue] = useState();
 
@@ -14,18 +16,70 @@ export const CardsContainer = ({ listItem }) => {
     e.preventDefault();
     let newCard = { id: uuidv4(), content: `${inputValue}` };
     //  newCard =! undefined ? listItem.task.push(newCard)
-    if(inputValue !== undefined){
-      listItem.task.push(newCard)
+    if (inputValue !== undefined) {
+      listItem.task.push(newCard);
     }
     showAddOption(false);
   }
+  // const { listTitle, setListTitle } = useState(listItem.name);
+  // const currentField = useRef(null);
+  // const [edit, editSet] = useState(false);
+  // useEffect(() => {
+  //   if (edit) {
+  //     currentField.current.select();
+  //     currentField.current.style.height =
+  //       currentField.current.scrollHeight + "px";
+  //   }
+  // }, [edit]);
+   
+  // const handleKeyPress = (e) => {
+  //   if (e.key === "Enter" || e === "outside") {
+  //     if (listTitle === "") {
+  //       setListTitle(listItem.name);
+      
+  //     }
+  //     else{
+  //       // listItem.name = listTitle
+  //       console.log(listTitle)
+  //       // setListTitle(listTitle);
+  //     }
+  //     editSet(false);
+      
 
-
+  //   }
+  // };
+ 
   // drag and drop
 
   return (
     <div>
       <li className="list-bg">
+        {/* <OutsideClickHandler onOutsideClick={() => handleKeyPress("outside")}>
+          <div id="mi">
+            {edit ? (
+              <textarea
+                id="mi-textarea"
+                className="project-title"
+                type="text"
+                value={listTitle}
+                defaultValue={listItem.name}
+                onChange = {(event) => setListTitle(event.target.value)}
+                // onKeyPress={handleKeyPress}
+                ref={currentField}
+                rows="1"
+              />
+            ) : (
+              <div
+                className="project-title"
+                onClick={() => editSet(true)}
+                id="mi-div"
+              >
+                {listItem.name}
+              </div>
+            )}
+          </div>
+        </OutsideClickHandler> */}
+
         <h1 className="project-title">{listItem.name}</h1>
 
         {listItem.task.map((item, i) => (
@@ -39,7 +93,6 @@ export const CardsContainer = ({ listItem }) => {
                   {...provided.dragHandleProps}
                   style={{
                     userSelect: "none",
-                    padding: 16,
                     margin: "0 0 8px 0",
                     minHeight: "50px",
                     backgroundColor: snapshot.isDragging
@@ -68,15 +121,19 @@ export const CardsContainer = ({ listItem }) => {
               <Button htmlType="submit" className="add-inner-card">
                 Add Card
               </Button>
-              <X onClick={() => showAddOption(false)} className='cancelIcon'/>
+              <X onClick={() => showAddOption(false)} className="cancelIcon" />
             </div>
           </form>
-        ) : (
-          <Button className="add-card-btn" onClick={() => showAddOption(true)}>
-            <span>+</span>Add Card
-          </Button>
-        )}
+        ) :
+        
+        <AddCard showAddOption={showAddOption} label={label}/>
+       }
       </li>
     </div>
   );
 };
+
+// CardsContainer.defaultProps = {
+//   label:"ADD CARD"
+  
+// };

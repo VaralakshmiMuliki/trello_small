@@ -1,10 +1,11 @@
 .list-container-bg{
     
-    min-height: 100vh;
-    min-width: 400vw;
+    // min-height: 100vh;
+    // min-width: 400vw;
     background-image: linear-gradient(to right, #3B185F,#863A6F);
     color: white;
     padding: 10px;
+    overflow-y: hidden;
 }
 .project-heading{
     color: #ffff;

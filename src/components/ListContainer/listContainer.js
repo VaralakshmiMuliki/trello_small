@@ -6,31 +6,25 @@ import { CardsContainer } from "../CardsContainer/cardsContainer";
 import { X } from "react-feather";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
+import PropTypes from 'prop-types';
+
 // import Column from "antd/es/table/Column";
 
-export const ListContainer = () => {
+export const ListContainer = ({label}) => {
   const [columns, setcolumns] = useState(dummyListData);
 
   const [addBoard, setAddBoard] = useState(false);
   const [boardTitle, setBoardTitle] = useState();
   function addList() {
-    // let newList = {
-    //   [uuidv4()]:{
-    //     name: boardTitle,
-    //     task:[]
-    //   }
-    // }
+  
     console.log("function called");
-
-    // Object.entries(add).newList(([key,value]) => { dummyListData[key] = value })
-    // dummyListData.push(newList);
 
     if(boardTitle !== undefined) {
       dummyListData[uuidv4()] = { name: boardTitle, task: [] };
     }
 
     setAddBoard(false);
-    console.log("new", dummyListData);
+    
   }
   const onDragEnd = (result, columns, setColumns) => {
     console.log("columns", columns);
@@ -91,11 +85,11 @@ export const ListContainer = () => {
                       background: snapshot.isDraggingOver ? "" : "",
                       padding: 4,
                       width: 250,
-                      minHeight: 500,
+                      minHeight: 100,
                     }}
                   >
                     <ul className="list-item">
-                      <CardsContainer listItem={column} key={columnId} />
+                      <CardsContainer label={label} listItem={column} key={columnId} />
                     </ul>
                     {provided.placeholder}
                   </div>
@@ -133,3 +127,16 @@ export const ListContainer = () => {
     </div>
   );
 };
+
+
+ListContainer.propTypes = {
+
+  label: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+ 
+}
+
+// ListContainer.defaultProps = {
+//   label:"ADD CARD"
+  
+// };
